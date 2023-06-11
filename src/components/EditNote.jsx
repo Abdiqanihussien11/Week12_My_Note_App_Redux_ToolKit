@@ -1,12 +1,28 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { editNote, fetchNotes } from '../store/api/NoteSlice';
 const EditNote = (props) => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [currentNote, setCurrentNote] = useState({});
+  
   const initialValues = {
     title: props.initialValues.title,
     content: props.initialValues.content,
   };
+  const params = useParams();
+
+  const notes = useSelector((state) => state.note.notes);
+  useEffect(() => {
+    const note = notes.find((note) => note.id === Number(params.id));
+    if (note) {
+    setCurrentBook(note);
+    }
+}, [notes, params.id]);
 
   const validationSchema = Yup.object({
     title: Yup.string().required('Title is required'),

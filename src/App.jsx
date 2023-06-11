@@ -2,10 +2,26 @@ import React, { useEffect, useState } from "react";
 import AddNote from "./components/AddNote";
 import Notes from "./components/Notes";
 import EditNote from "./components/EditNote";
+import { useSelector, useDispatch } from "react-redux";
+import NoteSlice, { fetchNotes } from "./store/api/NoteSlice";
 
 import axios from "axios";
 
 function App() {
+
+
+  const note = useSelector((state) => state.note.notes);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchNotes());
+  }, [dispatch]);
+
+  const handleNoteDelete = (noteId) => {
+    dispatch(deleteNOte(noteId));
+  };
+
   const [notes, setNotes] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [selectedNote, setSelectedNote] = useState(null);
