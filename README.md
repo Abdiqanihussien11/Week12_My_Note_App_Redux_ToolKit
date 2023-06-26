@@ -1,6 +1,6 @@
-# WEEK 12: My Note App - Redux Toolkit
+# WEEK 13: My Note App - RTK Query
 
-This Project allows you to practice the concepts and techniques learned last Sunday and apply them in a concrete project. This assignment explored React advanced state management with Redux Toolkit. In your Project for this assignment, you will demonstrate proficiency by creating a Single Page Application that performs CRUD (Create, Read, Update, Delete) operations on a locally hosted API server.
+This Project allows you to practice the concepts and techniques learned last Sunday and apply them in a concrete project. This assignment explored React advanced state management with RTK Query. In your Project for this assignment, you will demonstrate proficiency by creating a Single Page Application that performs CRUD (Create, Read, Update, Delete) operations on a locally hosted API server.
 
 ## Instructions
 
@@ -33,13 +33,11 @@ Follow these steps for completing your project:
 
 ## Minimum Viable Product
 
-Remove all props from components and use `useSelector` and `useDispatch` to get data from Redux store.
+Convert this application from using Redux Toolkit to RTK Query.
 
-- [ ] Create a directory called `store` under src, add `index.js`
-- [ ] Create another directory under store called `api` and add `NoteSlice.js`, implement your reducer/actions logic here.  
-- [ ] In `Notes` component to display all the notes from `useSelector`
-- [ ] Change all props in `AddNote` component and use `useDispatch` to make call to `NoteSlice`.
-- [ ] Do the same for `EditNote`.
+- [ ] Modify the `index.js` file in `store` directory
+- [ ] Modify `NoteSlice.js` under `store/api` directory and implement your RTK Query api here.
+- [ ] In `Notes` , `AddNote` and `EditNote`, delete `useSelector` and `useDispatch` and import hooks from your slice.
 - [ ] Make sure to redirect the user after editing or adding a note using `useNavigation` hook.
 - [ ] Make sure to implement the logic to delete notes.
 
@@ -58,4 +56,4 @@ Remove all props from components and use `useSelector` and `useDispatch` to get 
 
 ## STRETCH PROBLEMS
 
-- [ ] **ADVANCED** Use RTK Query instead of Redux Toolkit!
+- [ ] **ADVANCED** Create authentication by modifying the server directory and add login and register for user. Make sure to create new slice for the user.

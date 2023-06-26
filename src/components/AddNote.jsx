@@ -1,14 +1,12 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from 'react-dom';
-import { addNote } from '../store/api/NoteSlice';
+import { useDispatch } from "react-redux";
+import { addNote } from "../store/api/NoteSlice";
 
 const AddNote = (props) => {
-  const dispatch = useDispatch();
 
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const initialValues = {
     title: '',
@@ -20,15 +18,17 @@ const AddNote = (props) => {
     content: Yup.string().required('Content is required'),
   });
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, { resetForm }) => {
+    // Send the data to the server (localhost:9000/create_note)
     dispatch(addNote({
       title: values.title,
-      content: values.content
-    })).then(() => {
-      navigate("/");
-    })
-  }
+      content: values.content,
+    }));
+    
 
+    // Reset the form after submission
+    resetForm();
+  };
 
   return (
     <div className="bg-white p-10 rounded-lg shadow md:w-3/4 mx-auto lg:w-1/2">
@@ -70,6 +70,5 @@ const AddNote = (props) => {
     </div>
   );
 };
-
 
 export default AddNote;
