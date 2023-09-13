@@ -1,62 +1,61 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useSelector, useDispatch } from "react-redux";
-import { editNote, fetchNotes } from "../store/api/NoteSlice";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import { editNote, fetchNotes } from '../store/api/noteSlice';
 
 const EditNote = () => {
-
   const dispatch = useDispatch();
-  const params = useParams();
-  const navigate = useNavigate();
-
-  const [initialValues, setInitialValues] = useState({
-    title: '',
-    content: '',
-  });
-
-  const allNotes = useSelector((state) => state.notes.notes);
-
-  useEffect(() => {
-    dispatch(fetchNotes());
-  }, [dispatch]);
+  const navigate = useNavigate()
+  const [currentNote, setCurrentNote] = useState({});
   
+
+  const params = useParams();
+
+  const notes = useSelector((state) => state.note.notes);
+ 
   useEffect(() => {
-    const note = allNotes.find((note) => note.id === Number(params.id));
-    if (note) {
-      setInitialValues({
-        title: note.title,
-        content: note.content,
-      });
+    dispatch(fetchNotes())
+  }, [dispatch])
+
+  useEffect(() => {
+    if(notes.length) {
+     const note = notes.find((note) => note.id === Number(params.id))
+     setCurrentNote(note);
     }
-  }, [allNotes, params.id]);
+  }, [notes, params.id])
 
-
-
+  const initialValues = {
+    title: currentNote.title,
+    content: currentNote.content
+  };
+  
   const validationSchema = Yup.object({
     title: Yup.string().required('Title is required'),
     content: Yup.string().required('Content is required'),
   });
 
-  const handleSubmit = (values) => {
- 
-    dispatch(editNote({
-      noteId: Number(params.id),
-      updateNote: values,
-    })).then(() => {
-      navigate('/');
+  const handleSubmit = (values, { resetForm }) => {
+    dispatch(
+      editNote({
+      noteID: Number(params.id),
+      updatedNote: values
+    })
+    ).then(() => {
+      navigate("/")
     });
+
+    resetForm();
   };
 
   return (
     <div className="bg-white p-10 rounded-lg shadow md:w-3/4 mx-auto lg:w-1/2">
       <Formik
+        enableReinitialize
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
-        enableReinitialize
       >
         <Form>
           <div className="mb-5">

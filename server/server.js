@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cors());
-const port = process.env.PORT || 9000;
+const port = process.env.PORT || 9003;
 
 // Create SQLite database connection
 const db = new sqlite3.Database('./notes.db'); // Replace with your desired database file name or path

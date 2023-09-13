@@ -1,11 +1,10 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useDispatch } from "react-redux";
-import { addNote } from "../store/api/NoteSlice";
+import { useDispatch } from 'react-redux';
+import { addNote } from '../store/api/noteSlice';
 
-const AddNote = (props) => {
-
+const AddNote = () => {
   const dispatch = useDispatch();
 
   const initialValues = {
@@ -19,14 +18,11 @@ const AddNote = (props) => {
   });
 
   const handleSubmit = (values, { resetForm }) => {
-    // Send the data to the server (localhost:9000/create_note)
     dispatch(addNote({
       title: values.title,
-      content: values.content,
-    }));
-    
+      content: values.content
+    }))
 
-    // Reset the form after submission
     resetForm();
   };
 
